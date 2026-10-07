@@ -1,0 +1,4 @@
+# Local data store and uploaded files
+/data/*.json
+/uploads/*
+!/uploads/.htaccess

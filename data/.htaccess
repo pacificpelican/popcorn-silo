@@ -1,0 +1,2 @@
+# Never serve the local JSON store over the web.
+Require all denied

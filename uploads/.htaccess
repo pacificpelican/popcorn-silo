@@ -1,0 +1,2 @@
+# Downloads must go through download.php so permissions are enforced.
+Require all denied
