@@ -14,6 +14,14 @@ return [
         'password' => '',
     ],
 
+    // New-account registration.
+    //   open:         set to false to disable signups entirely.
+    //   invite_codes: if non-empty, signups require one of these codes.
+    'registration' => [
+        'open'         => true,
+        'invite_codes' => [],
+    ],
+
     // Where uploaded file contents are stored on disk.
     'upload_dir' => __DIR__ . '/uploads',
 

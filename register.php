@@ -6,14 +6,27 @@ if (current_user()) {
     exit;
 }
 
+$regCfg       = config()['registration'] ?? [];
+$regOpen      = (bool)($regCfg['open'] ?? true);
+$inviteCodes  = array_values(array_filter(array_map('strval', (array)($regCfg['invite_codes'] ?? []))));
+$inviteNeeded = $regOpen && $inviteCodes !== [];
+
 $errors = [];
-$email = '';
+$email  = '';
+$invite = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_check();
     $email    = trim((string)($_POST['email'] ?? ''));
     $password = (string)($_POST['password'] ?? '');
     $confirm  = (string)($_POST['confirm'] ?? '');
+    $invite   = trim((string)($_POST['invite'] ?? ''));
+
+    if (!$regOpen) {
+        $errors[] = 'Signups are closed right now.';
+    } elseif ($inviteNeeded && !in_array($invite, $inviteCodes, true)) {
+        $errors[] = "That invite code isn't valid.";
+    }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "That email doesn't look right.";
@@ -48,6 +61,9 @@ page_head('Create account');
   <?php foreach ($errors as $err): ?>
     <div class="flash flash-err"><?= e($err) ?></div>
   <?php endforeach; ?>
+  <?php if (!$regOpen): ?>
+    <p class="muted">Signups are closed right now — the silo is full. Check back later.</p>
+  <?php else: ?>
   <form method="post" action="register.php">
     <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
     <label>Email
@@ -59,8 +75,14 @@ page_head('Create account');
     <label>Confirm password
       <input type="password" name="confirm" required minlength="8">
     </label>
+    <?php if ($inviteNeeded): ?>
+    <label>Invite code
+      <input type="text" name="invite" required value="<?= e($invite) ?>" autocomplete="off">
+    </label>
+    <?php endif; ?>
     <button class="btn" type="submit">Create account</button>
   </form>
   <p class="muted">Already have one? <a href="login.php">Log in</a>.</p>
+  <?php endif; ?>
 </section>
 <?php page_foot(); ?>

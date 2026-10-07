@@ -71,6 +71,7 @@ function page_head(string $title): void {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($title) ?> · Popcorn Silo</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -79,6 +80,7 @@ function page_head(string $title): void {
   <nav class="site-nav">
     <?php if ($user): ?>
       <a href="profile.php">My files</a>
+      <a href="settings.php">Settings</a>
       <a href="logout.php">Log out</a>
     <?php else: ?>
       <a href="login.php">Log in</a>
@@ -94,7 +96,7 @@ function page_head(string $title): void {
 function page_foot(): void {
     ?>
 </main>
-<footer class="site-footer">🍿 Popcorn Silo · buttery fresh file storage</footer>
+<footer class="site-footer">🍿 <a class="site-link" href="https://github.com/pacificpelican/popcorn-silo">Popcorn Silo</a> · buttery fresh file storage · by <a class="site-link" href="https://altaredwood.work">Daniel McKeown</a></footer>
 </body>
 </html>
 <?php

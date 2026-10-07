@@ -37,6 +37,13 @@ Then open http://localhost:8000 — the app creates `data/` and `uploads/` autom
 
 If the MySQL credentials are blank, `pdo_mysql` is missing, or the connection fails, the app falls back to local JSON files in `data/` (`users.json`, `files.json`). The debug panel always shows which store is active.
 
+## Registration & invites
+
+Two knobs in [config.php](config.php) under `'registration'`:
+
+- `'open' => false` — closes signups entirely; the signup page shows a closed notice and direct POSTs are rejected.
+- `'invite_codes' => ['KERNEL', 'BUTTER']` — when non-empty, the signup form requires one of these codes. Leave empty for open registration.
+
 ## Project layout
 
 ```
@@ -45,6 +52,7 @@ index.php           Front page: most recent shared file + links
 login.php           Log in
 register.php        Create account
 logout.php
+settings.php        Account settings: delete account + all data
 profile.php         Your files: upload, download, rename, share/unshare, delete
 file.php            Per-file permalink page
 download.php        Permission-checked download endpoint

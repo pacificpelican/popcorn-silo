@@ -15,6 +15,9 @@ interface Store {
     public function createUser(string $email, string $passwordHash): array;
     public function getUser(int $id): ?array;
 
+    /** Remove a user and every file row they own. */
+    public function deleteUser(int $id): void;
+
     public function createFile(int $userId, string $originalName, string $storedName, int $size, string $mime): array;
     public function getFile(int $id): ?array;
     public function listFilesByUser(int $userId): array;
@@ -95,6 +98,13 @@ final class JsonStore implements Store {
             }
         }
         return null;
+    }
+
+    public function deleteUser(int $id): void {
+        $users = array_filter($this->read('users'), fn($u) => (int)$u['id'] !== $id);
+        $this->write('users', $users);
+        $files = array_filter($this->read('files'), fn($f) => (int)$f['user_id'] !== $id);
+        $this->write('files', $files);
     }
 
     public function createFile(int $userId, string $originalName, string $storedName, int $size, string $mime): array {
@@ -226,6 +236,11 @@ final class MySqlStore implements Store {
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE id = ?');
         $stmt->execute([$id]);
         return $stmt->fetch() ?: null;
+    }
+
+    public function deleteUser(int $id): void {
+        // files rows are removed by the ON DELETE CASCADE foreign key.
+        $this->pdo->prepare('DELETE FROM users WHERE id = ?')->execute([$id]);
     }
 
     public function createFile(int $userId, string $originalName, string $storedName, int $size, string $mime): array {
