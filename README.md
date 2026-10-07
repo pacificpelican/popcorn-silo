@@ -1,6 +1,6 @@
 # 🍿 Popcorn Silo
 
-A simple file upload and management utility written in plain PHP. No composer, no build step.
+A simple file upload and management utility written in plain PHP. No composer, no build step, from [Alta Redwood](https://altaredwood.work).
 
 ## Features
 
@@ -69,3 +69,7 @@ uploads/            Uploaded file contents (auto-created, random names)
 - All state-changing requests require a CSRF token.
 - Uploaded files are stored under random names; downloads go through `download.php`, which enforces the shared/owner permission check. Private files are never exposed at a direct URL.
 - The included `.htaccess` files block direct web access to `data/` and `uploads/` on Apache. On nginx or other servers, add an equivalent rule (the built-in PHP server is dev-only anyway).
+
+## License
+
+- The Popcorn Silo project is copyright 2026 [Daniel J. McKeown](https://danieljmckeown.com) & licensed under the [ISC License](https://opensource.org/license/ISC)
