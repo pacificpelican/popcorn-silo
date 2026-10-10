@@ -18,7 +18,7 @@ page_head('My files');
   </form>
 </section>
 
-<section class="card">
+<section class="card files-card">
   <?php if (!$files): ?>
     <p class="muted">No files yet. The silo is empty — sad, but fixable.</p>
   <?php else: ?>

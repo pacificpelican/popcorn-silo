@@ -89,6 +89,8 @@ a:hover { color: var(--orange-600); }
   border-top: 4px solid var(--orange-500);
 }
 
+.files-card { overflow-x: auto; }
+
 .hero { background: linear-gradient(135deg, #fff, var(--orange-100)); }
 .hero h1 { font-size: 1.8rem; }
 
