@@ -42,15 +42,24 @@ function render_flash(): void {
 function debug_info(): array {
     $cfg = config();
     $dir = $cfg['upload_dir'];
-    return [
-        'Data store'          => store()->describe(),
-        'Upload directory'    => $dir,
+    $activeStore = store();
+    $info = [
+        'Data store'          => $activeStore->describe(),
         'Upload dir writable' => is_dir($dir) && is_writable($dir) ? 'yes' : 'NO',
         'file_uploads'        => ini_get('file_uploads') ? 'On' : 'Off',
         'upload_max_filesize' => (string)ini_get('upload_max_filesize'),
         'post_max_size'       => (string)ini_get('post_max_size'),
-        'PHP version'         => PHP_VERSION,
     ];
+
+    if (!$activeStore instanceof MySqlStore) {
+        $info = [
+            'Data store'       => $activeStore->describe(),
+            'Upload directory' => $dir,
+        ] + $info;
+        $info['PHP version'] = PHP_VERSION;
+    }
+
+    return $info;
 }
 
 /** Small button that expands into the debug panel (no JS needed). */
@@ -96,7 +105,7 @@ function page_head(string $title): void {
 function page_foot(): void {
     ?>
 </main>
-<footer class="site-footer">🍿 <a class="site-link" href="https://github.com/pacificpelican/popcorn-silo">Popcorn Silo</a> · buttery fresh file storage · by <a class="site-link" href="https://altaredwood.work">Daniel McKeown</a></footer>
+<footer class="site-footer">🍿 <a class="site-link" href="https://github.com/pacificpelican/popcorn-silo">Popcorn Silo</a> · buttery fresh file storage · by <a class="site-link" href="https://altaredwood.work">Daniel McKeown</a><br><a class="site-link" href="privacy.php">Privacy policy</a> · <a class="site-link" href="terms.php">Terms of use</a></footer>
 </body>
 </html>
 <?php

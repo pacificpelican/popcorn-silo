@@ -8,7 +8,8 @@ A simple file upload and management utility written in plain PHP. No composer, n
 - Upload files; download, rename, delete, and toggle **private** ↔ **shared**
 - Per-file permalink pages (`file.php?id=N`) — visible to the owner, or to anyone if the file is shared
 - Front page shows the **most recent shared file**
-- Expandable **debug panel** on the front page and profile page: current data store, upload dir writability, PHP upload limits
+- Expandable **debug panel** on the front page and profile page: current data store, upload dir writability, PHP upload limits (local JSON deployments also show local path and PHP version)
+- Privacy policy and terms of use linked from the footer
 - Purple & orange, obviously
 
 ## Requirements

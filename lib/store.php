@@ -191,7 +191,7 @@ final class MySqlStore implements Store {
     }
 
     public function describe(): string {
-        return 'MySQL (' . $this->database . '@' . $this->host . ')';
+        return 'mySQL';
     }
 
     private function migrate(): void {
