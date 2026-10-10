@@ -27,6 +27,15 @@ function format_size(int $bytes): string {
     return $bytes . ' B';
 }
 
+function public_user_label(?string $email): string {
+    if ($email === null || $email === '') {
+        return 'unknown';
+    }
+
+    $localPart = explode('@', $email, 2)[0];
+    return 'user-' . substr(hash('sha256', strtolower($localPart)), 0, 12);
+}
+
 function flash(string $msg, string $type = 'ok'): void {
     $_SESSION['flash'][] = ['msg' => $msg, 'type' => $type];
 }

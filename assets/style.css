@@ -75,7 +75,7 @@ a:hover { color: var(--orange-600); }
 /* ---------- Layout / cards ---------- */
 
 .wrap {
-  max-width: 62rem;
+  max-width: 74rem;
   margin: 1.5rem auto;
   padding: 0 1rem;
 }
@@ -222,10 +222,38 @@ input:focus {
 
 /* ---------- File permalink page ---------- */
 
+.file-card { position: relative; }
+.file-card h1 { padding-right: 6.5rem; }
+.share-button {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  margin-right: 0;
+}
+.share-status {
+  position: absolute;
+  right: 1.5rem;
+  top: 4.15rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
 .meta { margin: 0.5rem 0 1rem; }
 .meta-row { display: flex; gap: 1rem; padding: 0.25rem 0; border-bottom: 1px dashed #eee0d5; }
 .meta-row dt { width: 6rem; flex: none; color: var(--muted); font-weight: 600; }
 .meta-row dd { margin: 0; }
+
+@media (max-width: 34rem) {
+  .file-card h1 { padding-right: 0; }
+  .share-button {
+    position: static;
+    margin-bottom: 0.75rem;
+  }
+  .share-status {
+    position: static;
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
+}
 
 /* ---------- Flash messages ---------- */
 
